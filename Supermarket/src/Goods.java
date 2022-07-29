@@ -1,6 +1,7 @@
 public class Goods {
+    public static int index = 0;
     public int id;
-    public String name;
+    private String name;
     public String pDate;
     public int price;
     public float discount;
@@ -21,7 +22,13 @@ public class Goods {
       this.discount = discount;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return this.name;
+    }
 
     public void inform(){
         System.out.println("상품번호: " + this.id + " | 상품명: " + name + " | 가격: " + price);
@@ -30,6 +37,7 @@ public class Goods {
     }
 
     public int discountPrice() {
+
         return (int) (price - price * (discount / 100));
     }
 }
