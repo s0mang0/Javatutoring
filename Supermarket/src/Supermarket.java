@@ -2,6 +2,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Supermarket {
+    public static void inform(Goods goods){
+        goods.inform();
+    }
     public static void main(String[] args) {
 
         System.out.println("은서마켓 온 것을 환영합니다~~!");
@@ -30,10 +33,18 @@ public class Supermarket {
                         int price = scanner.nextInt();
                         if (pDate.equals("0")) {
                             goodsArr[Goods.index % 5] = new Goods(Goods.index, name, price);
-                        } else {
-                            System.out.print("할인율을 입력해주세요. >>");
+                        }
+                        else {
+                            System.out.print("할인율을 입력해주세요.>> ");
                             float discount = scanner.nextFloat();
-                            goodsArr[Goods.index % 5] = new Goods(Goods.index, name, pDate, price, discount);
+                            System.out.print("유통기한을 입력해주세요.>> ");
+                            String eDate = scanner.next();
+                            if (eDate.equals("0")) {
+                                goodsArr[Goods.index % 5] = new Goods(Goods.index, name, pDate, price, discount);
+                            }
+                            else { //업캐스팅
+                                goodsArr[Goods.index % 5] = new FreshFood(Goods.index, name, pDate, price, discount, eDate);
+                            }
                         }
                         Goods.index++;
                         System.gc();
@@ -41,13 +52,13 @@ public class Supermarket {
                     case 2:
                         System.out.println("--------------------------------------------------");
                         for (int n = 0; n < goodsArr.length; n++) {
-                            goodsArr[n].inform();
+                            inform(goodsArr[n]);
                         }
                         break;
                     case 3:
                         System.out.print("상품번호를 입력해주세요.>> ");
                         int i = scanner.nextInt();
-                        System.out.println(goodsArr[i].getName() + "의 가격은 " + goodsArr[i].discountPrice() + "원입니다.");
+                        System.out.println(goodsArr[i%5].getName() + "의 가격은 " + goodsArr[i%5].discountPrice() + "원입니다.");
                         break;
                     case 4:
                         System.out.println("이용해주셔서 감사합니다.");
